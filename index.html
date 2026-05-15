@@ -429,13 +429,14 @@
     /* ===== Mobile ===== */
     @media (max-width: 768px) {
       nav { padding: 0 1rem; }
-      .nav-links {
+      nav .nav-links {
         display: none; flex-direction: column;
         position: absolute; top: 56px; left: 0; right: 0;
-        background: var(--nav); padding: 1rem 2rem;
+        background: linear-gradient(135deg, #8FB89A 0%, #7BAB87 100%);
+        padding: 1rem 2rem;
         gap: 1rem;
       }
-      .nav-links.open { display: flex; }
+      nav .nav-links.open { display: flex; }
       .hamburger { display: block; }
 
       .hero .container { flex-direction: column; text-align: center; }
