@@ -630,26 +630,25 @@
           <div class="card-header">
             <div class="card-icon">🧬</div>
             <h3>PRISM ML Biomarker Pipeline <span class="flagship">&#9733; Flagship</span></h3>
-            <p class="card-desc">Random Forest model predicting RAF inhibitor sensitivity from multi-omic features across 700+ cancer cell lines. GSVA pathway features, nested CV, consensus biomarker identification.</p>
+            <p class="card-desc">Feature-discovery pipeline on DepMap/PRISM that separates genuine drug-response biomarkers from tissue-of-origin proxies, using RAF inhibitor AZ-628 across 700+ cancer cell lines. BRAF serves as a positive control, not the endpoint.</p>
           </div>
           <div class="card-tags">
             <span class="tag tag-teal">Python</span>
             <span class="tag tag-teal">scikit-learn</span>
             <span class="tag tag-teal">SHAP</span>
-            <span class="tag tag-teal">GSVA</span>
             <span class="tag tag-warm">PRISM</span>
             <span class="tag tag-warm">DepMap</span>
           </div>
           <div class="card-expand">Click to expand &darr;</div>
           <div class="card-details">
             <h4>Problem</h4>
-            <p>Predicting which cancer cell lines respond to RAF inhibitors requires integrating genomic, transcriptomic, and mutation data, but naive gene-level features bury the known BRAF biomarker under hundreds of correlated expression features.</p>
+            <p>Drug-sensitivity prediction from genomics is confounded by tissue of origin: a drug's most responsive lineage is enriched for its biomarker, so genes that merely mark that tissue correlate with response without informing mechanism. For AZ-628, melanoma is both the most BRAF-mutant and most sensitive lineage — so which features are real biology, and which are just melanoma markers?</p>
             <h4>Approach</h4>
-            <p>Built a leakage-free ML pipeline that replaces individual gene features with GSVA pathway scores, applies FDR-corrected screening on training data only, and uses nested cross-validation (5 seeds x 10 folds) with six model families. Consensus biomarker ranking via SHAP + bootstrap + permutation importance.</p>
+            <p>Screened multi-omic DepMap features against PRISM sensitivity on training data only, with BRAF mutation as a positive control (Cohen's d = &minus;1.5, p = 1.5&times;10&#8315;&#8313;). Ranked features by a consensus of SHAP, bootstrapped Gini, and permutation importance, then applied full-lineage residualization to strip out all tissue-of-origin signal and see which features survive.</p>
             <h4>Key Results</h4>
-            <p>BRAF mutation rises from rank #134 (naive) to #1 (pathway-based) in feature importance. Pipeline generalizes across three drugs with different mechanisms (AZ-628, dabrafenib, idasanutlin), recovering expected biomarkers for each.</p>
+            <p>The top features are MAPK-pathway-output genes (ETV4, DUSP6, SPRY4) that retain ~72% of their association with sensitivity after removing all lineage &mdash; while melanocyte-identity markers collapse to ~8%, exposing them as tissue proxies. Run untuned on two more drugs, the pipeline recovers each mechanism in the top three features (BRAF for dabrafenib; the p53 program for idasanutlin).</p>
             <div class="card-links">
-              <span class="coming-soon">Code repository coming soon</span>
+              <a href="https://github.com/Akanksha-Pandey/prism_ml_biomarker">GitHub Repository &rarr;</a>
             </div>
           </div>
         </div>
